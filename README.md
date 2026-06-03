@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AASA MedChem
 
-## Getting Started
+AASA MedChem is a role-based marketplace workflow for chemical products, quotations, orders, and inventory tracking.
 
-First, run the development server:
+## Architecture
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+Next.js
+  ↓
+API Routes
+  ↓
+Prisma
+  ↓
+Neon PostgreSQL
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js 16 App Router
+- Prisma 7 generated client in `app/generated/prisma`
+- NextAuth v4 credentials provider
+- Neon PostgreSQL
+- Tailwind CSS
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Unit Storage Strategy
 
-## Learn More
+All stock and quotation math is converted through `src/lib/conversions.ts`.
 
-To learn more about Next.js, take a look at the following resources:
+- Weight → grams (`g`)
+- Volume → milliliters (`mL`)
+- Count → items (`item`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Products always store their base unit internally as `g`, `mL`, or `item`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Pricing Strategy
 
-## Deploy on Vercel
+The app stores base price per smallest unit.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Examples:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Weight products store price per `g`
+- Volume products store price per `mL`
+- Count products store price per `item`
+
+Quotation quantities are converted to base units before totals are calculated.
+
+## Credentials
+
+Seeded users use password `123456`.
+
+- Admin: `admin@test.com`
+- Seller: `seller@test.com`
+- Buyer: `buyer@test.com`
+
+Run:
+
+```bash
+npx prisma db seed
+```
+
+## Local Development
+
+```bash
+npm install
+npx prisma migrate deploy
+npx prisma generate
+npx prisma db seed
+npm run dev
+```
+
+Required environment variables:
+
+```text
+DATABASE_URL=
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+```
+
+## Deployment URL
+
+Vercel Link: Add after deployment.
+
+## Final Order of Execution
+
+1. Next Setup
+2. Neon
+3. Prisma Schema
+4. Migration
+5. Auth
+6. Route Protection
+7. Dashboard Layouts
+8. Product CRUD
+9. Conversion Engine
+10. Search
+11. Quotation System
+12. Orders
+13. Inventory Tracking
+14. Admin Features
+15. Deployment
+16. README

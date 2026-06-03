@@ -34,11 +34,9 @@ enum QuotationStatus {
 }
 
 enum OrderStatus {
-  PLACED
-  CONFIRMED
-  SHIPPED
-  DELIVERED
-  CANCELLED
+  PENDING
+  PROCESSING
+  COMPLETED
 }
 
 // ─── MODELS ──────────────────────────────────────────
@@ -99,7 +97,7 @@ model Order {
   id          String      @id @default(uuid())
   buyerId     String
   buyer       User        @relation(fields: [buyerId], references: [id])
-  status      OrderStatus @default(PLACED)
+  status      OrderStatus @default(PENDING)
   totalAmount Decimal
   items       OrderItem[]
   createdAt   DateTime    @default(now())
