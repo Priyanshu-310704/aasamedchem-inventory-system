@@ -11,3 +11,115 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// ─── ENUMS ───────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  SELLER
+  BUYER
+}
+
+enum ProductDimension {
+  WEIGHT
+  VOLUME
+  COUNT
+}
+
+enum QuotationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum OrderStatus {
+  PLACED
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+// ─── MODELS ──────────────────────────────────────────
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role
+
+  products     Product[]
+  quotations   Quotation[]
+  orders       Order[]
+
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id            String           @id @default(uuid())
+  name          String
+  sku           String           @unique
+  description   String?
+  sellerId      String
+  seller        User             @relation(fields: [sellerId], references: [id])
+  dimension     ProductDimension
+  stockQuantity Decimal
+  baseUnit      String
+  basePrice     Decimal
+
+  quotationItems       QuotationItem[]
+  orderItems           OrderItem[]
+  inventoryTransactions InventoryTransaction[]
+
+  createdAt DateTime @default(now())
+}
+
+model Quotation {
+  id        String          @id @default(uuid())
+  buyerId   String
+  buyer     User            @relation(fields: [buyerId], references: [id])
+  status    QuotationStatus @default(PENDING)
+  items     QuotationItem[]
+  createdAt DateTime        @default(now())
+}
+
+model QuotationItem {
+  id          String    @id @default(uuid())
+  quotationId String
+  quotation   Quotation @relation(fields: [quotationId], references: [id])
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
+  quantity    Decimal
+  unitPrice   Decimal
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  buyerId     String
+  buyer       User        @relation(fields: [buyerId], references: [id])
+  status      OrderStatus @default(PLACED)
+  totalAmount Decimal
+  items       OrderItem[]
+  createdAt   DateTime    @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Decimal
+  unitPrice Decimal
+}
+
+model InventoryTransaction {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  change    Decimal
+  reason    String
+  createdAt DateTime @default(now())
+}
