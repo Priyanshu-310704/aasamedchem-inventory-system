@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { getServerSession } from "next-auth"
-import { ProductDimension } from '@generated/prisma'
+import { ProductDimension } from '@prisma/client'
 import { authOptions } from "../../lib/auth"
 import { prisma } from "../../lib/prisma"
 import { getBaseUnit, type Dimension } from "../../../src/lib/conversions"

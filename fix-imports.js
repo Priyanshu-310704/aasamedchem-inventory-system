@@ -22,7 +22,7 @@ const files = walk('./app');
 files.forEach(f => {
   let content = fs.readFileSync(f, 'utf8');
   if (content.includes('generated/prisma')) {
-    content = content.replace(/['"](?:\.\.\/)+generated\/prisma['"]/g, "'@generated/prisma'");
+    content = content.replace(/['"](?:\.\.\/)+generated\/prisma['"]/g, "'@prisma/client'");
     fs.writeFileSync(f, content);
     console.log('Updated ' + f);
   }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { ProductDimension } from '@generated/prisma'
+import { ProductDimension } from '@prisma/client'
 import { prisma } from "../../lib/prisma"
 import { getUnits, type Dimension } from "../../../src/lib/conversions"
 

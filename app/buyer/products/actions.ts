@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { getServerSession } from "next-auth"
-import { QuotationStatus } from '@generated/prisma'
+import { QuotationStatus } from '@prisma/client'
 import { authOptions } from "../../lib/auth"
 import { prisma } from "../../lib/prisma"
 import { toBaseUnit, type Dimension, type Unit } from "../../../src/lib/conversions"

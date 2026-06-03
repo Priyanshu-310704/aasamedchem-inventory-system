@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs"
-import { Role } from "../app/generated/prisma"
+import { Role } from "@prisma/client"
 import { prisma } from "../app/lib/prisma"
 
 const users = [

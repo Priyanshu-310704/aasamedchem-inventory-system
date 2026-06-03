@@ -21,7 +21,7 @@ function walk(dir) {
 const files = walk('./app');
 files.forEach(f => {
   let content = fs.readFileSync(f, 'utf8');
-  if (content.includes('@generated/prisma')) {
+  if (content.includes('@prisma/client')) {
     content = content.replace(/['"]@generated\/prisma['"]/g, "'@prisma/client'");
     fs.writeFileSync(f, content);
     console.log('Updated ' + f);
