@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { getServerSession } from "next-auth"
-import { OrderStatus } from "../../generated/prisma"
+import { OrderStatus } from '@generated/prisma'
 import { authOptions } from "../../lib/auth"
 import { prisma } from "../../lib/prisma"
 

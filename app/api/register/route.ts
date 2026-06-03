@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "../../lib/prisma"
 import bcrypt from "bcryptjs"
-import { Role } from "../../generated/prisma"
+import { Role } from '@generated/prisma'
 
 export async function POST(req: NextRequest) {
   const { name, email, password, role }: {

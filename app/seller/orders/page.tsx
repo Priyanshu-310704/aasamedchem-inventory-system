@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import { updateOrderStatus } from "./actions"
-import { OrderStatus } from "../../generated/prisma"
+import { OrderStatus } from '@generated/prisma'
 import { authOptions } from "../../lib/auth"
 import { prisma } from "../../lib/prisma"
 
