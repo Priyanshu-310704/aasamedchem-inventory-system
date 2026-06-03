@@ -17,7 +17,7 @@ Neon PostgreSQL
 ## Stack
 
 - Next.js 16 App Router
-- Prisma 7 generated client in `app/generated/prisma`
+- Prisma 7 generated client in `prisma/generated/client`
 - NextAuth v4 credentials provider
 - Neon PostgreSQL
 - Tailwind CSS
