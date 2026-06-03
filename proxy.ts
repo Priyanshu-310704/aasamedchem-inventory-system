@@ -7,7 +7,7 @@ const protectedRoutes = [
   { path: "/buyer", role: "BUYER" },
 ]
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
   const route = protectedRoutes.find(({ path }) => pathname.startsWith(path))
 
